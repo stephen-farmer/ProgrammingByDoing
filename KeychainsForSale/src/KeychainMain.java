@@ -12,39 +12,34 @@ public class KeychainMain {
 
     public static void main(String[] args) {
         while (true) {
-            mainMenu();
-        }
-    }
+            System.out.println("\nYe Olde Keychain Shoppe\n\n" +
+                    "1. Add Keychains to Order\n" +
+                    "2. Remove Keychains from Order\n" +
+                    "3. View Current Order\n" +
+                    "4. Checkout\n"
+            );
 
-    public static void mainMenu(){
-
-        System.out.println("\nYe Olde Keychain Shoppe\n\n" +
-                "1. Add Keychains to Order\n" +
-                "2. Remove Keychains from Order\n" +
-                "3. View Current Order\n" +
-                "4. Checkout\n"
-        );
-
-        System.out.println("Please enter your choice: ");
-        int input = scanner.nextInt();
-        switch (input) {
-            case 1:
-                addKeychains();
-                break;
-            case 2:
-                System.out.printf("\nYou have %d keychains. How many to remove? ", numberOfKeychains);
-                int removal = scanner.nextInt();
-                removeKeychains(removal);
-                System.out.printf("You now have %d keychains\n", numberOfKeychains);
-                break;
-            case 3:
-                viewKeychains();
-                break;
-            case 4:
-                checkout();
-                break;
-            default:
-                System.out.println("Error");
+            System.out.println("Please enter your choice: ");
+            int input = scanner.nextInt();
+            switch (input) {
+                case 1:
+                    addKeychains();
+                    break;
+                case 2:
+                    System.out.printf("\nYou have %d keychains. How many to remove? ", numberOfKeychains);
+                    int removal = scanner.nextInt();
+                    removeKeychains(removal);
+                    System.out.printf("You now have %d keychains\n", numberOfKeychains);
+                    break;
+                case 3:
+                    viewKeychains();
+                    break;
+                case 4:
+                    checkout();
+                    break;
+                default:
+                    System.out.println("Error");
+            }
         }
     }
 
