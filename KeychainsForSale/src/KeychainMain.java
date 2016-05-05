@@ -5,6 +5,11 @@ import java.util.Scanner;
  */
 public class KeychainMain {
 
+    static int numberOfKeychains = 0;
+    static int keychainPrice = 10;
+    static Scanner scanner = new Scanner(System.in);
+
+
     public static void main(String[] args) {
         while (true) {
             mainMenu();
@@ -12,6 +17,7 @@ public class KeychainMain {
     }
 
     public static void mainMenu(){
+
         System.out.println("\nYe Olde Keychain Shoppe\n\n" +
                 "1. Add Keychains to Order\n" +
                 "2. Remove Keychains from Order\n" +
@@ -20,15 +26,16 @@ public class KeychainMain {
         );
 
         System.out.println("Please enter your choice: ");
-        Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
-
         switch (input) {
             case 1:
                 addKeychains();
                 break;
             case 2:
-                removeKeychains();
+                System.out.printf("\nYou have %d keychains. How many to remove? ", numberOfKeychains);
+                int removal = scanner.nextInt();
+                removeKeychains(removal);
+                System.out.printf("You now have %d keychains\n", numberOfKeychains);
                 break;
             case 3:
                 viewKeychains();
@@ -42,19 +49,28 @@ public class KeychainMain {
     }
 
     public static void addKeychains(){
-        System.out.println("ADD KEYCHAINS");
+        System.out.printf("\nYou have %d keychains. How many to add? ", numberOfKeychains);
+        numberOfKeychains += scanner.nextInt();
+        System.out.printf("You now have %d keychains\n", numberOfKeychains);
     }
 
-    public static void removeKeychains(){
-        System.out.println("REMOVE KEYCHAINS");
+    public static int removeKeychains(int keychainsToRemove){
+        numberOfKeychains -= keychainsToRemove;
+        return numberOfKeychains;
     }
 
     public static void viewKeychains(){
-        System.out.println("VIEW KEYCHAINS");
+        System.out.printf("\nYou have %d keychains\n", numberOfKeychains);
+        System.out.printf("Keychains cost $%d each\n", keychainPrice);
+        int total = numberOfKeychains * keychainPrice;
+        System.out.printf("Total cost is $%d\n", total);
     }
 
     public static void checkout(){
-        System.out.println("CHECKOUT");
+        System.out.println("What is your name?");
+        String name = scanner.next();
+        viewKeychains();
+        System.out.printf("Thanks for your order, %s!", name);
         System.exit(0);
     }
 }
