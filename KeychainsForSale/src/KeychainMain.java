@@ -55,5 +55,6 @@ public class KeychainMain {
 
     public static void checkout(){
         System.out.println("CHECKOUT");
+        System.exit(0);
     }
 }
