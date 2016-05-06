@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 /**
@@ -8,7 +9,8 @@ public class KeychainMain {
     static int numberOfKeychains = 0;
     static int keychainPrice = 10;
     static Scanner scanner = new Scanner(System.in);
-
+    static double salesTax = .0825;
+    static int orderShippingCost = 5;
 
     public static void main(String[] args) {
         while (true) {
@@ -38,7 +40,7 @@ public class KeychainMain {
                     checkout();
                     break;
                 default:
-                    System.out.println("Error");
+                    System.out.println("Error, please select valid menu number");
             }
         }
     }
@@ -50,15 +52,32 @@ public class KeychainMain {
     }
 
     public static int removeKeychains(int keychainsToRemove){
-        numberOfKeychains -= keychainsToRemove;
+        if(keychainsToRemove<numberOfKeychains){
+            numberOfKeychains -= keychainsToRemove;
+        } else {
+            System.out.printf("You cannot remove %d keychains when you only have %d\n", keychainsToRemove, numberOfKeychains);
+        }
+
         return numberOfKeychains;
     }
 
     public static void viewKeychains(){
+        // Display (on separate lines) number of keychains in order, price per keychain,
+        // shipping charges on order, subtotal before tax, tax on the order, and final cost of order
         System.out.printf("\nYou have %d keychains\n", numberOfKeychains);
-        System.out.printf("Keychains cost $%d each\n", keychainPrice);
-        int total = numberOfKeychains * keychainPrice;
-        System.out.printf("Total cost is $%d\n", total);
+        System.out.printf(" • Keychains cost $%d each\n", keychainPrice);
+        System.out.printf(" • Shipping charges: $%d\n", orderShippingCost);
+
+        int beforeTax = numberOfKeychains * keychainPrice;
+
+        System.out.printf(" • Total cost before tax: $%d\n", beforeTax);
+
+        DecimalFormat formatter = new DecimalFormat("#0.00");
+        double tax = beforeTax*salesTax;
+        System.out.println(" • Tax on the order: $" + formatter.format(tax));
+
+        double afterTax = tax + beforeTax;
+        System.out.println("** Final cost of order: $" + formatter.format(afterTax) + " **");
     }
 
     public static void checkout(){
