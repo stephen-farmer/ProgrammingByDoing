@@ -1,17 +1,15 @@
-import java.util.ArrayList;
 
 /**
  * Created by stephen.farmer on 5/11/16.
  */
 public class Main {
+    static Printer printer = new Printer();
     public static void main(String[] args) {
-        play();
-    }
+        printer.printTitle();
 
-    public static void play(){
-
-        Deck deck = new Deck();
-        deck.initDeck();
-
+        while(true){
+            Blackjack game = new Blackjack();
+            game.run();
+        }
     }
 }
