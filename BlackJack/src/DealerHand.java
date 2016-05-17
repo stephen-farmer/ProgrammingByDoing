@@ -19,7 +19,7 @@ public class DealerHand {
             System.out.println("The dealer has a " + c.value + faceName + c.suit + " and a hidden card.");
 
         }
-        System.out.println("Dealer's total: " + total); //JUST FOR TESTING
+//        System.out.println("Dealer's total: " + total); //JUST FOR TESTING
     }
 
     public void printDealerHand(){
@@ -41,18 +41,22 @@ public class DealerHand {
         total = 0;
         for (Card c : dealerHand) {
             total += c.value;
-            System.out.println(total);
+            //System.out.println(total);
         }
 
         if (total > 21) {
             System.out.printf("Dealer Steve BUSTED with %d! YOU WIN! :D\n", total);
             busted = true;
-        } else if (total == 21) {
-            System.out.println("Dealer Steve got Blackjack!\n");
-            blackjack = true;
-            printDealerHand();
-            System.out.println("You lose :(\n");
         }
+        // Below is old code for checking blackjack, needs to be re-written
+        // with better rules
+
+//        } else if (total == 21) {
+//            System.out.println("Dealer Steve got Blackjack!\n");
+//            blackjack = true;
+//            printDealerHand();
+//            System.out.println("You lose :(\n");
+//        }
         return total;
     }
 }

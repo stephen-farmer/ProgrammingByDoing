@@ -1,25 +1,23 @@
-import java.util.ArrayList;
+import java.text.MessageFormat;
 
 /**
  * Created by stephen.farmer on 5/13/16.
- *
- *     suits_symbols = ['♠', '♦', '♥', '♣']
- *
- *     Indexes to replace: 1, 4, 7
  */
 public class Printer {
-    ArrayList<String> playingCard = new ArrayList<>();
 
-    public void printCard(){
-        playingCard.add("┌─────────┐");
-        playingCard.add("│         │");
-        playingCard.add("│         │");
-        playingCard.add("│         │");
-        playingCard.add("│         │");
-        playingCard.add("│         │");
-        playingCard.add("│         │");
-        playingCard.add("│         │");
-        playingCard.add("└─────────┘");
+    MessageFormat cardFormatter;
+
+    public void printCard(BaseCard baseCard, Card card){
+        Object[] cardArray = {card.value, card.suitImage};
+        if (card.value < 10) {
+            cardFormatter = new MessageFormat(baseCard.toString());
+        } else {
+
+        }
+
+
+        String format = cardFormatter.format(cardArray);
+        System.out.print(format);
     }
 
     public void printTitle(){

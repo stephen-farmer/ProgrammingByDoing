@@ -7,7 +7,17 @@ public class Card {
     public String face;
     public boolean isFaceCard;
     public boolean isAceCard;
+    public String suitImage;
 
+    public Card(){
+
+    }
+
+    public Card(int v, String s, int f) {
+        setValue(v);
+        setSuit(s);
+        setFace(f);
+    }
 
     public void setValue(int cardValue) {
         value = cardValue;
@@ -25,8 +35,8 @@ public class Card {
         return suit;
     }
 
-    public void setFace(int n){
-        switch (n) {
+    public void setFace(int f){
+        switch (f) {
             case 1:
                 face = "Ace";
                 isAceCard = true;

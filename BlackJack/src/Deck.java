@@ -8,11 +8,16 @@ public class Deck {
     public ArrayList<Card> cardDeck = new ArrayList<>();
 
     public void initDeck() {
+        /*
+         * Runs through each suit and creates the deck tp add to
+         * the arrayList
+         */
 
         // Create Spades
         for (int i = 1; i < 14; i++) {
             Card card = new Card();
             card.setSuit("Spades");
+            card.suitImage = "♠";
             if (i < 11) {
                 card.setValue(i);
             } else {
@@ -26,6 +31,7 @@ public class Deck {
         for (int i = 1; i < 14; i++) {
             Card card = new Card();
             card.setSuit("Clubs");
+            card.suitImage = "♣";
             if (i < 11) {
                 card.setValue(i);
             } else {
@@ -39,6 +45,8 @@ public class Deck {
         for (int i = 1; i < 14; i++) {
             Card card = new Card();
             card.setSuit("Diamonds");
+            card.suitImage = "♦";
+
             if (i < 11) {
                 card.setValue(i);
             } else {
@@ -52,6 +60,7 @@ public class Deck {
         for (int i = 1; i < 14; i++) {
             Card card = new Card();
             card.setSuit("Hearts");
+            card.suitImage = "♥";
             if (i < 11) {
                 card.setValue(i);
             } else {
@@ -67,6 +76,11 @@ public class Deck {
     }
 
     public void deckCheck(){
+        /*
+         * Checks if the deck has 5 or less cards in it. If so, the deck
+         * will be "shuffled" (clear the arrayList, initialize deck,
+         * and shuffle arrayList)
+         */
         if (cardDeck.size() <= 5) {
             cardDeck.clear();
             initDeck();

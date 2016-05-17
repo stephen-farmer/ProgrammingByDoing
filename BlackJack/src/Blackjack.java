@@ -4,12 +4,17 @@ import java.util.Scanner;
  * Created by stephen.farmer on 5/12/16.
  *
  * OBJECTIVES:
- *
- *  - Set Ace value to high and low
- *  - Get Card ASCII Art working
- *  - Check for natural blackjack
+
  *  - Implement betting money
  *
+ * CURRENT STATUS:
+ * The ASCII art cards turned out to be way more complicated than I thought. I basically got it working but it only
+ * looks good for cards 2-9 and they don't even print on the same line...I could invest a couple more days into it
+ * but it just doesn't feel like it's worth it right now. The code for it still exists (Printer and BaseCard classes)
+ * but it's not being used anywhere right now.
+ *
+ * Everything else seems to be working fine though, no major outliers. I'll probably implement the betting
+ * functionality since it wouldn't be very difficult to do.
  */
 
 public class Blackjack {
@@ -18,23 +23,33 @@ public class Blackjack {
     Scanner scanner = new Scanner(System.in);
     Deck deck = new Deck();
     Card hitCard = new Card();
+    Sleeper sleeper = new Sleeper();
+
     public boolean gameOver = false;
 
     public void run() {
         /*
-         * This is the bulk ofe the game logic which is called in the main method.
-         *
+         * This is the bulk of the game logic which is called in the main method.
          */
+
         System.out.println("Dealer Steve shuffles the deck and deals your hand...\n");
         deck.cardDeck.clear();
         deck.initDeck();
         deck.shuffle();
 
+        sleeper.sleep1k();
         playerDeal();
+        sleeper.sleep1k();
+        myHand.checkHand();
         dealerDeal();
+        //myHand.initialDeal = true;
+
+        //myHand.initialDeal = false;
+
 
         while (!gameOver) {
 
+            sleeper.sleep1k();
             System.out.println("\nWhat would you like to do? (hit/stand)");
             String stringInput = scanner.nextLine();
 
@@ -59,13 +74,15 @@ public class Blackjack {
                 dealer.printDealerHand();
                 System.out.println("(Total: " + dealer.total + ")\n");
 
+                // Determine the winner by hand total
                 if (myHand.total > dealer.total) {
                     System.out.println("YOU WIN! :D");
-                    gameOver = true;
+                } else if(myHand.total == dealer.total){
+                    System.out.println("It was a tie!");
                 } else {
                     System.out.println("Aw man, Dealer Steve won :(\n");
-                    gameOver = true;
                 }
+                gameOver = true;
             }
         }
 
@@ -98,7 +115,6 @@ public class Blackjack {
         }
 
         myHand.printHand();
-        System.out.printf("(Your total is %d)\n\n", myHand.total);
     }
 
     public void dealerDeal() {
@@ -124,6 +140,14 @@ public class Blackjack {
     }
 
     public void playerHit() {
+        /*
+         * Method used for when player chooses to hit. Pulls from the top of
+         * the shuffled deck, adds to player hand and removes from deck.
+         * Then does a hand check to see if the player has busted or not.
+         *
+         * Also this is when a deck check is run to see if the deck needs
+         * to be reshuffled.
+         */
         hitCard = deck.cardDeck.get(0);
         myHand.playerHand.add(hitCard);
         deck.cardDeck.remove(hitCard);
@@ -142,6 +166,14 @@ public class Blackjack {
     }
 
     public void dealerHit() {
+        /*
+         * Method used for when dealer chooses to hit. Pulls from the top of
+         * the shuffled deck, adds to dealer hand and removes from deck.
+         * Then does a hand check to see if the dealer has busted or not.
+         *
+         * Also this is when a deck check is run to see if the deck needs
+         * to be reshuffled.
+         */
         hitCard = deck.cardDeck.get(0);
         dealer.dealerHand.add(deck.cardDeck.get(0));
         deck.cardDeck.remove(0);
@@ -172,4 +204,28 @@ public class Blackjack {
             System.out.println("Dealer Steve chose to stand.");
         }
     }
+
+    public void acePlayerDeal() {
+        /*
+         * Used for testing ace value functionality.
+         *
+         * Replaces playerDeal method, basically just forces the first
+         * card in the hand to be the Ace of Spades
+         */
+        Card card1 = new Card(1, "Spades", 1);
+        Card card2 = deck.cardDeck.get(1);
+        myHand.playerHand.add(card1);
+        myHand.playerHand.add(card2);
+        deck.cardDeck.remove(0);
+        deck.cardDeck.remove(0);
+
+        myHand.total = card1.value + card2.value;
+        if (myHand.total == 21) {
+            myHand.blackjack = true;
+        }
+
+        myHand.printHand();
+        System.out.printf("(Your total is %d)\n\n", myHand.total);
+    }
+
 }
